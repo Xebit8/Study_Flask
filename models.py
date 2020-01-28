@@ -42,3 +42,5 @@ class Task(Base):
                           self.created_on, 
                           self.deadline,
                           self.status])
+
+Base.metadata.create_all()
