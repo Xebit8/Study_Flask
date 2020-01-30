@@ -44,3 +44,17 @@ class Task(Base):
                           self.status])
 
 Base.metadata.create_all()
+
+def add_user(name, email, password):
+    engine = create_engine('sqlite:///app.db', echo=True)
+    session = Session(bind=engine)
+    session.add(User(name=name, email=email, password=password))
+    session.commit()
+    session.close()
+
+def check_user(email, password):
+    engine = create_engine('sqlite:///app.db', echo=True)
+    session = Session(bind=engine)
+    user = session.query(User).filter_by(email=email, password=password).first()
+    session.close()
+    return user

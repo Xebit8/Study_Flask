@@ -36,3 +36,9 @@
     <br>
     <input type="submit">
 </form>
+
+{% if error == 'passwords_not_match' %}
+<p>Sorry, seems like passwords doesn't match</p>
+{% elif error == 'already_exists' %}
+<p>Sorry, seems like this account already exists</p>
+{% endif %}
