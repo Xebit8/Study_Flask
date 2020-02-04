@@ -37,6 +37,8 @@
     <input type="submit">
 </form>
 
+<a href={{ url_for('login') }}>Already have account</a>
+
 {% if error == 'passwords_not_match' %}
 <p>Sorry, seems like passwords doesn't match</p>
 {% elif error == 'already_exists' %}

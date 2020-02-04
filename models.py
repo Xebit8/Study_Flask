@@ -17,6 +17,8 @@ class User(Base):
     email = Column(String(30), unique=True, nullable=False)
     registered_on = Column(Date, default=datetime.date.today())
 
+    tasks = relationship('Task')
+
     def __str__(self):
         return '\n'.join([self.id, 
                           self.name, 
@@ -33,6 +35,8 @@ class Task(Base):
     created_on = Column(Date, default=datetime.date.today())
     deadline = Column(Date)
     status = Column(Boolean, default=0) 
+
+    author = relationship('User')
 
     def __str__(self):
         return '\n'.join([self.id,
@@ -58,3 +62,28 @@ def check_user(email, password):
     user = session.query(User).filter_by(email=email, password=password).first()
     session.close()
     return user
+
+def add_task(user, title, details, deadline_date):
+    engine = create_engine('sqlite:///app.db', echo=True)
+    db_session = Session(bind=engine)
+
+    db_user = db_session.query(User).filter_by(name=user).first()
+    
+    if deadline_date:
+        deadline_date = datetime.date.fromisoformat(deadline_date)
+    else:
+        deadline_date = None
+
+    db_user.tasks.append(Task(title=title, 
+                              description=details, 
+                              deadline=deadline_date))
+    db_session.commit()
+    db_session.close()
+
+def get_user_tasks(name):
+    engine = create_engine('sqlite:///app.db', echo=True)
+    db_session = Session(bind=engine)
+    db_user = db_session.query(User).filter_by(name=name).first()
+    user_tasks = db_user.tasks
+    db_session.close()
+    return user_tasks
