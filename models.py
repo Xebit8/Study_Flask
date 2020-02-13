@@ -4,6 +4,7 @@ from sqlalchemy import (Column, String, Integer, Text,
                         create_engine)
 from sqlalchemy.orm import Session, relationship
 from sqlalchemy.ext.declarative import declarative_base
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 engine = create_engine('sqlite:///app.db', echo=True)
@@ -39,19 +40,20 @@ class Task(Base):
     author = relationship('User')
 
     def __str__(self):
-        return '\n'.join([self.id,
+        return '\n'.join(map(str, [self.id,
                           self.user_id, 
                           self.title, 
                           self.description, 
                           self.created_on, 
                           self.deadline,
-                          self.status])
+                          self.status]))
 
 Base.metadata.create_all()
 
 def add_user(name, email, password):
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
+    password = generate_password_hash(password)
     session.add(User(name=name, email=email, password=password))
     session.commit()
     session.close()
@@ -59,9 +61,14 @@ def add_user(name, email, password):
 def check_user(email, password):
     engine = create_engine('sqlite:///app.db', echo=True)
     session = Session(bind=engine)
-    user = session.query(User).filter_by(email=email, password=password).first()
+    user = session.query(User).filter_by(email=email).first()
+    if user and check_password_hash(user.password, password):
+        session.close()
+        return user
     session.close()
-    return user
+    return None
+
+   
 
 def add_task(user, title, details, deadline_date):
     engine = create_engine('sqlite:///app.db', echo=True)
@@ -87,3 +94,24 @@ def get_user_tasks(name):
     user_tasks = db_user.tasks
     db_session.close()
     return user_tasks
+
+def delete_task(username, task_id):
+    user_tasks = get_user_tasks(username)
+    task_id = int(task_id.split('_')[1]) - 1
+    task_to_delete = user_tasks[task_id].id
+    engine = create_engine('sqlite:///app.db', echo=True)
+    db_session = Session(bind=engine)
+    task = db_session.query(Task).filter_by(id=task_to_delete).first()
+    db_session.delete(task)
+    db_session.commit()
+    db_session.close()
+
+
+def change_task(username, task_id):
+    engine = create_engine('sqlite:///app.db', echo=True)
+    db_session = Session(bind=engine)
+    user = db_session.query(User).filter_by(name=username).first()
+    task_to_change = user.tasks[int(task_id)-1]
+    task_to_change.status = not task_to_change.status
+    db_session.commit()
+    db_session.close()

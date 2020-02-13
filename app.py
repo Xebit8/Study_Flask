@@ -1,7 +1,9 @@
 import datetime
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import (Flask, render_template, request, redirect, 
+                  url_for, session, flash)
 from sqlalchemy.exc import IntegrityError
-from models import add_user, check_user, add_task, get_user_tasks
+from models import (add_user, check_user, add_task, get_user_tasks, 
+                    delete_task, change_task)
 
 
 app = Flask(__name__)
@@ -53,5 +55,17 @@ def logout():
     # del session['username'] # рискованно
     session.pop('username', None)
     return redirect(url_for('index'))
+
+@app.route('/remove/<task_id>')
+def delete_tasks(task_id):
+    delete_task(session['username'], task_id)
+    flash(f"{task_id} was deleted")
+    return redirect(url_for('user_page', name=session['username']))
+
+@app.route('/status/task_<task_id>')
+def change_tasks(task_id):
+    change_task(session['username'], task_id)
+    flash(f"Status of {task_id} was changed")
+    return redirect(url_for('user_page', name=session['username']))
 
 app.run(debug=True) #app.run('0.0.0.0','3000')

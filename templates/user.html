@@ -6,10 +6,19 @@
 <a href={{ url_for('logout') }}>Log Out</a>
 <h2>Hello, {{ username|title }}!</h2>
 
+{% with messages = get_flashed_messages() %}
+    {% for m in messages %}
+        <p>{{ m }}</p>
+    {% endfor %}
+{% endwith %}
+
 
 <ol>
 {% for task in tasks %}
-    <li>{{ task.title }} <a href={{ "/remove/task_" + loop.index|string }}>Remove</a> </li>
+    <li>{{ task.title }} ({{ task.status }})
+        <a href={{ "/remove/task_" + loop.index|string }}>Remove</a>
+        <a href={{ "/status/task_" + loop.index|string }}>Completed</a> 
+    </li>
 {% endfor %}
 </ol>
 
