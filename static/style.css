@@ -1,0 +1,38 @@
+@import url('https://fonts.googleapis.com/css?family=Alegreya+Sans+SC:400,900|Press+Start+2P&display=swap&subset=cyrillic');
+
+body {
+    font-family: 'Alegreya Sans SC', sans-serif;
+    background: url('./bg.jpg');
+    background-size: cover;
+    background-position: center;
+    height: 97vh;
+}
+
+h1, h2 {
+    font-family: 'Press Start 2P', cursive;
+    text-align: center;
+    color: whitesmoke;
+}
+
+h1 {
+    font-size: 4rem;
+    margin-top: 20px;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin: 0 30%;
+    border: 14px solid whitesmoke;
+    padding: 20px;
+    background-color: rgba(255, 255, 255, 0.204);
+}
+
+form a {
+    display: block;
+    text-decoration: none;
+    color: black;
+    text-align: center;
+    margin-top: 10px;
+}

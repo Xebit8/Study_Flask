@@ -1,3 +1,11 @@
+<head>
+    <link 
+        rel="stylesheet" 
+        href={{ url_for('static', filename='style.css') }}
+    >
+</head>
+
+
 {% if username != session['username'] %}
 <p>Sorry, seems like something goes wrong. Return to Sign In</p>
 <a href={{ url_for('index') }}>To Sign In</a>

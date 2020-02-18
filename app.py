@@ -9,6 +9,11 @@ from models import (add_user, check_user, add_task, get_user_tasks,
 app = Flask(__name__)
 app.secret_key = 'themostsecretkeyinthealluniversecreatedbymeonthelessonwithpks22'
 
+@app.errorhandler(404)
+def error_404(error):
+    return render_template('404.html')
+
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
     if request.method == 'POST':
