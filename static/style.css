@@ -23,16 +23,59 @@ form {
     display: flex;
     flex-direction: column;
     width: 40%;
-    margin: 0 30%;
+    margin: 0 auto;
     border: 14px solid whitesmoke;
     padding: 20px;
     background-color: rgba(255, 255, 255, 0.204);
+}
+
+form * {
+    text-align: center;
 }
 
 form a {
     display: block;
     text-decoration: none;
     color: black;
-    text-align: center;
     margin-top: 10px;
+}
+
+form p {
+    font-size: 2rem;
+    margin-bottom: 5px;
+}
+
+form input {
+    color: whitesmoke;
+    font-size: 1.5rem;
+    background: rgba(0, 0, 0, 0.6);
+    border: 0;
+    width: 60%;
+    margin: 0 auto;
+    border-radius: 10px;
+}
+
+form input[type="submit"] {
+    color: initial;
+    background-color: whitesmoke;
+    border: 1px solid;
+    text-transform: uppercase;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    transform: scale(1.01);
+    filter: drop-shadow(2px 1px);
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+p#login_error, a#error_a{
+    text-align: center;
+    color: white;
+    margin-bottom: 15px;
 }

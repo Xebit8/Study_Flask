@@ -3,6 +3,10 @@
         rel="stylesheet" 
         href={{ url_for('static', filename='style.css') }}
     >
+    <link 
+       rel="stylesheet" 
+        href={{ url_for('static', filename='user.css') }}
+    >
 </head>
 
 
@@ -11,7 +15,7 @@
 <a href={{ url_for('index') }}>To Sign In</a>
 
 {% else %}
-<a href={{ url_for('logout') }}>Log Out</a>
+<a id="logout" href={{ url_for('logout') }}>Log Out</a>
 <h2>Hello, {{ username|title }}!</h2>
 
 {% with messages = get_flashed_messages() %}
@@ -21,14 +25,21 @@
 {% endwith %}
 
 
-<ol>
+<div id="wrapper">
 {% for task in tasks %}
-    <li>{{ task.title }} ({{ task.status }})
+    <div class="card">
+        <div class="card-img"></div>
+        <h3 class="card-title">{{ task.title }}</h3>
+        <p class="card-details">{{ task.description }}</p>
+        <div class="card-start">Created: {{ task.created_on }}</div>
+        {% if task.deadline %}
+        <div class="card-end">Deadline: {{ task.deadline }}</div>
+        {% endif %}
         <a href={{ "/remove/task_" + loop.index|string }}>Remove</a>
         <a href={{ "/status/task_" + loop.index|string }}>Completed</a> 
-    </li>
+    </div>
 {% endfor %}
-</ol>
+</div>
 
 <form method="POST">
     

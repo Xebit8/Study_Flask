@@ -1,0 +1,56 @@
+body {
+    display: block;
+}
+
+form textarea {
+    width: 80%;
+    margin: 0 auto;
+    background-color: rgba(0,0,0,0.6);
+    border-radius: 10px;
+    border: 0;
+}
+
+form input[name="deadline_date"] {
+    width: fit-content;
+    margin: 0 auto;
+}
+
+a#logout {
+    text-align: center;
+    color: white;
+    margin-bottom: 15px;
+}
+
+div.card {
+    border: 4px solid whitesmoke;
+    width: 240px;
+    background: rgba(255,255,255,0.4);
+}
+
+div.card * {
+    text-align: center;
+}
+
+div.card-img {
+    height: 80px;
+    background: url(https://natureconservancy-h.assetsadobe.com/is/image/content/dam/tnc/nature/en/photos/tnc_86887171.jpg);
+    background-size: cover;
+    background-position: center;
+}
+
+div.card a {
+    display: block;
+    margin: 4px auto;
+}
+
+div#wrapper {
+    display: flex;
+    width: 80%;
+    margin: 20px auto;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+div.card {
+    margin: 20px;
+}

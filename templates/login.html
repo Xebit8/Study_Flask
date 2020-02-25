@@ -7,8 +7,8 @@
 
 
 {% if error %}
-<p>Account have not found. Try again / Return to Sign Up</p>
-<a href={{ url_for('index') }}>To Sign Up</a>
+<p id="login_error">Account have not found. Try again / Return to Sign Up</p>
+<a id="error_a" href={{ url_for('index') }}>To Sign Up</a>
 {% endif %}
 
 <form method="POST">
